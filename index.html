@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Running Festival Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:#0f172a;
+color:#fff;
+}
+
+.header{
+padding:35px;
+text-align:center;
+background:linear-gradient(135deg,#ef4444,#f97316);
+}
+
+.header h1{
+margin:0;
+font-size:32px;
+}
+
+.container{
+max-width:950px;
+margin:auto;
+padding:25px;
+}
+
+.card{
+background:#1e293b;
+padding:25px;
+border-radius:14px;
+margin-bottom:22px;
+box-shadow:0 10px 30px rgba(0,0,0,0.45);
+}
+
+.card h2{
+margin-top:0;
+border-bottom:1px solid #334155;
+padding-bottom:10px;
+}
+
+.form-group{margin-bottom:16px}
+
+label{
+display:block;
+font-size:14px;
+margin-bottom:6px;
+color:#cbd5f5;
+}
+
+input,select{
+width:100%;
+padding:12px;
+border-radius:8px;
+border:none;
+background:#0f172a;
+color:#fff;
+font-size:14px;
+}
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.ticket-box{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.ticket{
+background:#0f172a;
+padding:14px;
+border-radius:10px;
+border:2px solid transparent;
+cursor:pointer;
+}
+
+.ticket.active{
+border:2px solid #f97316;
+}
+
+.price{
+font-weight:700;
+margin-top:5px;
+}
+
+.summary{
+font-size:15px;
+line-height:1.6;
+}
+
+.qris{
+text-align:center;
+margin-top:15px;
+}
+
+.qris img{
+width:240px;
+border-radius:10px;
+background:#fff;
+padding:10px;
+}
+
+.countdown{
+font-size:20px;
+font-weight:600;
+color:#f97316;
+text-align:center;
+margin-top:10px;
+}
+
+button{
+width:100%;
+padding:15px;
+background:linear-gradient(135deg,#ef4444,#f97316);
+border:none;
+border-radius:10px;
+color:#fff;
+font-size:18px;
+font-weight:600;
+cursor:pointer;
+}
+
+button:hover{opacity:0.9}
+
+.invoice{
+background:#020617;
+padding:20px;
+border-radius:12px;
+font-size:14px;
+line-height:1.7;
+}
+
+.footer{
+text-align:center;
+font-size:13px;
+padding:25px;
+color:#94a3b8;
+}
+
+@media(max-width:700px){
+.row{grid-template-columns:1fr}
+.ticket-box{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Running Festival Registration</h1>
+<p>Registrasi peserta & pembayaran QRIS</p>
+</div>
+
+<div class="container">
+
+<form id="form">
+
+<div class="card">
+<h2>Informasi Peserta</h2>
+
+<div class="form-group">
+<label>Nama Lengkap</label>
+<input id="nama" required>
+</div>
+
+<div class="row">
+<div class="form-group">
+<label>Email</label>
+<input id="email" type="email" required>
+</div>
+
+<div class="form-group">
+<label>No HP</label>
+<input id="hp" required>
+</div>
+</div>
+
+<div class="row">
+<div class="form-group">
+<label>Tanggal Lahir</label>
+<input type="date" required>
+</div>
+
+<div class="form-group">
+<label>Jenis Kelamin</label>
+<select>
+<option>Pria</option>
+<option>Wanita</option>
+</select>
+</div>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Pilih Tiket</h2>
+
+<div class="ticket-box">
+
+<div class="ticket" onclick="selectTicket('5K',150000,this)">
+<b>5K Fun Run</b>
+<div class="price">Rp150.000</div>
+</div>
+
+<div class="ticket" onclick="selectTicket('10K',250000,this)">
+<b>10K Run</b>
+<div class="price">Rp250.000</div>
+</div>
+
+<div class="ticket" onclick="selectTicket('Half Marathon',400000,this)">
+<b>Half Marathon</b>
+<div class="price">Rp400.000</div>
+</div>
+
+<div class="ticket" onclick="selectTicket('Full Marathon',600000,this)">
+<b>Full Marathon</b>
+<div class="price">Rp600.000</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+<h2>Invoice</h2>
+
+<div class="invoice" id="invoice">
+Belum ada tiket dipilih
+</div>
+
+</div>
+
+<div class="card">
+<h2>Pembayaran QRIS</h2>
+
+<div class="qris">
+<img src="qris.png" alt="QRIS">
+</div>
+
+<p style="text-align:center">Scan QRIS di atas untuk melakukan pembayaran</p>
+
+<div class="countdown">
+Selesaikan pembayaran dalam: <span id="timer">10:00</span>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Upload Bukti Pembayaran</h2>
+
+<div class="form-group">
+<label>Upload Screenshot Transfer</label>
+<input type="file" required>
+</div>
+
+</div>
+
+<button type="submit">Kirim Pendaftaran</button>
+
+</form>
+
+</div>
+
+<div class="footer">
+© Running Festival Registration System
+</div>
+
+<script>
+
+let selectedTicket = ''
+let price = 0
+
+function selectTicket(name,p,el){
+
+selectedTicket = name
+price = p
+
+let tickets = document.querySelectorAll('.ticket')
+tickets.forEach(t=>t.classList.remove('active'))
+
+el.classList.add('active')
+
+let invoice = `
+<b>Invoice Pendaftaran</b><br><br>
+Tiket : ${name}<br>
+Harga : Rp ${p.toLocaleString()}<br>
+Biaya Admin : Rp 5.000<br>
+Total : Rp ${(p+5000).toLocaleString()}
+`
+
+document.getElementById('invoice').innerHTML = invoice
+}
+
+// countdown pembayaran
+
+let time = 600
+
+setInterval(()=>{
+
+let minutes = Math.floor(time/60)
+let seconds = time%60
+
+if(seconds < 10) seconds = '0'+seconds
+
+
+document.getElementById('timer').innerHTML = minutes+":"+seconds
+
+if(time>0) time--
+
+},1000)
+
+// submit
+
+document.getElementById('form').addEventListener('submit',function(e){
+
+if(selectedTicket===''){
+alert('Pilih tiket terlebih dahulu')
+e.preventDefault()
+return
+}
+
+alert('Pendaftaran berhasil dikirim! Admin akan memverifikasi pembayaran.')
+
+})
+
+</script>
+
+</body>
+</html>
